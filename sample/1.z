@@ -1,0 +1,14 @@
+func add(a, b) {
+    return a + b
+}
+func delete(a, b) {
+    return a - b
+}
+print(add(1,2))
+print(delete(4,2))
+
+if (1 == 2) {
+    print("hi")
+}else {
+    print("hi2")
+}
