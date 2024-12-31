@@ -3,7 +3,6 @@ package main
 import (
 	"bytes"
 	"fmt"
-	"io/ioutil"
 	"os"
 	"strings"
 	"time"
@@ -31,7 +30,7 @@ func showErrorSource(source []byte, pos tokenizer.Position, dividerLen int) {
 
 func main() {
 	if len(os.Args) < 2 || (os.Args[1] == "-stats" && len(os.Args) < 3) {
-		fmt.Printf("usage: zlang [-stats] source_filename\n")
+		fmt.Printf("usage: zlang [-stats] source_filename.z\n")
 		os.Exit(1)
 	}
 	showStats := false
@@ -42,8 +41,14 @@ func main() {
 		filename = os.Args[2]
 		execArgs = os.Args[3:]
 	}
+	// check format file
+	name := strings.Split(filename, "/")[len(strings.Split(filename, "/"))-1]
+	if strings.Split(name, ".")[len(strings.Split(name, "."))-1] != "z" {
+		fmt.Printf("error: %q is not a zlang file\n", os.Args[1])
+		os.Exit(1)
+	}
 
-	input, err := ioutil.ReadFile(filename)
+	input, err := os.ReadFile(filename)
 	if err != nil {
 		fmt.Printf("error reading %q\n", os.Args[1])
 		os.Exit(1)
