@@ -1,33 +1,15 @@
-name: Go CI
-
+---
+name: ci
 on:
-  push:
-    branches:
-      - master
-  pull_request:
-    branches:
-      - master
-
-permissions:
-  contents: write
-
+  - push
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-
-    - name: Set up Go
-      uses: actions/setup-go@v4
+    - uses: actions/checkout@v4
+    - uses: actions/setup-go@v5
       with:
-        go-version: '1.22.3'
-
-    - name: Install dependencies
-      run: go mod tidy
-      
-    - name: Run Go Vulnerability Scanner
-      uses: debug-ing/go-vuln-scanner@v1.0.0
-
+        go-version-file: "go.mod"
+    - uses: debug-ing/go-vuln-scanner@v1.0.0
     - name: Build project
-      run: go build zlang.go
+      run: make build
