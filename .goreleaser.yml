@@ -1,0 +1,15 @@
+---
+project_name: zlang
+builds:
+  - main: ./cmd/zlang.go
+    goos:
+      - linux
+      - darwin
+      - windows
+    goarch:
+      - amd64
+      - arm64
+release:
+  github:
+    owner: debug-ing
+    name: zlang
